@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { Graphics } from '@inlet/react-pixi';
 
-import { canvasSpecs, boardDimensions } from "./Consts.jsx";
+import { canvasSpecs, boardDimensions } from "./Const.jsx";
 
 export const VerticalBar = ({ x }) => {
 

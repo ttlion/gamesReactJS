@@ -5,115 +5,16 @@ import { VerticalBar, HorizontalBar } from './Line.jsx';
 import { Place } from './Place.jsx';
 import { Stage, Sprite, Graphics } from '@inlet/react-pixi';
 
-import { canvasSpecs, boardDimensions } from "./Consts.jsx";
+import { canvasSpecs, boardDimensions } from "./Const.jsx";
+import { boardPlacesInitState, makeMove, getGameStatus, initalGameStatus } from "../logic/GameLogic.jsx";
+import { playersInitialState } from "../logic/Player.jsx";
 
 export const Board = () => {
 
-    let initialPlaces = [];
-    for (let i = 0; i < 3; i++) {
-        initialPlaces[i] = [];
-    }
-
-    for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3; j++) {
-            initialPlaces[i][j] = {
-                image: null
-            }
-        }
-    }
-
-
-    const [places, setPlaces] = useState(initialPlaces);
-
     const [playerToMove, setPlayerToMove] = useState(0);
-
-    const [players, setPlayers] = useState([
-        {
-            playerNb: 0,
-            image: "./bigX.png"
-        },
-        {
-            playerNb: 1,
-            image: "./tick.png"
-        }
-    ]);
-
-
-
-
-    const UpdateGameOnMouseDown = (event) => {
-        setPlayerToMove(playerToMove === 0 ? 1 : 0);
-
-        let cursorX = event.clientX;
-        let cursorY = event.clientY;
-
-        if (cursorX < 0 || cursorY < 0
-            || cursorX > canvasSpecs.canvasWidth
-            || cursorY > canvasSpecs.canvasHeight) {
-            return;
-        }
-
-        let row = getRowOfCursor(cursorY);
-        let col = getColOfCursor(cursorX);
-
-        console.log(row);
-        console.log(col);
-
-        places[row][col] = {
-            image: players[playerToMove].image
-        }
-
-        setPlaces(places);
-
-
-    };
-
-
-    const getRowOfCursor = (cursorX) => {
-        if (cursorX < canvasSpecs.canvasWidth / 3) {
-            return 0;
-        }
-        else if (cursorX < 2 * canvasSpecs.canvasWidth / 3) {
-            return 1;
-        }
-        else {
-            return 2;
-        }
-    }
-
-    const getColOfCursor = (cursorY) => {
-        if (cursorY < canvasSpecs.canvasHeight / 3) {
-            return 0;
-        }
-        else if (cursorY < 2 * canvasSpecs.canvasHeight / 3) {
-            return 1;
-        }
-        else {
-            return 2;
-        }
-    }
-
-    const BoardVerticalLines = () => {
-        return (
-            <>
-                <VerticalBar x={boardDimensions.verticalBarWidth / 2} />
-                <VerticalBar x={canvasSpecs.canvasWidth / 3} />
-                <VerticalBar x={2 * canvasSpecs.canvasWidth / 3} />
-                <VerticalBar x={canvasSpecs.canvasWidth - boardDimensions.verticalBarWidth / 2} />
-            </>
-        )
-    }
-
-    const BoardHorizontalLines = () => {
-        return (
-            <>
-                <HorizontalBar y={boardDimensions.horizontalBarHeigth / 2} />
-                <HorizontalBar y={canvasSpecs.canvasHeight / 3} />
-                <HorizontalBar y={2 * canvasSpecs.canvasHeight / 3} />
-                <HorizontalBar y={canvasSpecs.canvasHeight - boardDimensions.horizontalBarHeigth / 2} />
-            </>
-        )
-    }
+    const [players, setPlayers] = useState(playersInitialState());
+    const [places, setPlaces] = useState(boardPlacesInitState());
+    const [gameStatus, setGameStatus] = useState(initalGameStatus());
 
     const BoardPlaces = () => {
         return (
@@ -133,28 +34,118 @@ export const Board = () => {
         )
     }
 
+    const UpdateGameOnMouseDown = (event) => {
+
+        if (gameStatus.ended) {
+            return;
+        }
+
+        let boardPlace = getBoardPlaceOfCursor(event.clientX, event.clientY);
+
+        if (boardPlace.row === -1 || boardPlace.col === -1) {
+            return;
+        }
+
+        let move = makeMove(playerToMove, players, places, boardPlace);
+
+        if (move.success === true) {
+            setPlayerToMove(move.nextPlayer);
+            setPlaces(move.updatedPlaces);
+        }
+
+        setGameStatus(getGameStatus(places));
+
+    };
+
+
+
 
     return (
-        <div onMouseDown={UpdateGameOnMouseDown}
-            width={canvasSpecs.canvasWidth}
-            height={canvasSpecs.canvasHeight}
-            style={{ justifyContent: 'center' }}
-        >
+        <>
+            <div onMouseDown={UpdateGameOnMouseDown}
+                width={canvasSpecs.canvasWidth}
+                height={canvasSpecs.canvasHeight}
+                style={{ justifyContent: 'center' }}
+            >
 
-            <Stage options={{ backgroundColor: canvasSpecs.color.white }}>
+                <Stage options={{ backgroundColor: canvasSpecs.color.white }}>
 
-                <BoardVerticalLines />
-                <BoardHorizontalLines />
-                <BoardPlaces />
+                    <BoardVerticalLines />
+                    <BoardHorizontalLines />
+                    <BoardPlaces />
 
-            </Stage>
+                </Stage>
 
-        </div>
+            </div>
+
+            {gameStatus.ended &&
+                <div>{"Jogo Terminou"}</div>
+            }
+        </>
 
     )
 
 };
 
 
+const BoardVerticalLines = () => {
+    return (
+        <>
+            <VerticalBar x={boardDimensions.verticalBarWidth / 2} />
+            <VerticalBar x={canvasSpecs.canvasWidth / 3} />
+            <VerticalBar x={2 * canvasSpecs.canvasWidth / 3} />
+            <VerticalBar x={canvasSpecs.canvasWidth - boardDimensions.verticalBarWidth / 2} />
+        </>
+    )
+}
+
+const BoardHorizontalLines = () => {
+    return (
+        <>
+            <HorizontalBar y={boardDimensions.horizontalBarHeigth / 2} />
+            <HorizontalBar y={canvasSpecs.canvasHeight / 3} />
+            <HorizontalBar y={2 * canvasSpecs.canvasHeight / 3} />
+            <HorizontalBar y={canvasSpecs.canvasHeight - boardDimensions.horizontalBarHeigth / 2} />
+        </>
+    )
+}
 
 
+const getBoardPlaceOfCursor = (cursorX, cursorY) => {
+
+    let place = {
+        row: -1,
+        col: -1
+    }
+
+    if (cursorY > 0 && cursorY < canvasSpecs.canvasHeight) {
+
+        if (cursorY < canvasSpecs.canvasHeight / 3) {
+            place.row = 0;
+        }
+        else if (cursorY < 2 * canvasSpecs.canvasHeight / 3) {
+            place.row = 1;
+        }
+        else {
+            place.row = 2;
+        }
+
+    }
+
+    if (cursorX > 0 && cursorX < canvasSpecs.canvasWidth) {
+
+        if (cursorX < canvasSpecs.canvasWidth / 3) {
+            place.col = 0;
+        }
+        else if (cursorX < 2 * canvasSpecs.canvasWidth / 3) {
+            place.col = 1;
+        }
+        else {
+            place.col = 2;
+        }
+
+    }
+
+    return place;
+
+};

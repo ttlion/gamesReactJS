@@ -1,6 +1,6 @@
 
 import { Sprite } from '@inlet/react-pixi';
-import { canvasSpecs, boardDimensions } from "./Consts.jsx";
+import { canvasSpecs, boardDimensions } from "./Const.jsx";
 
 export const Place = ({ row, col, image }) => {
 
