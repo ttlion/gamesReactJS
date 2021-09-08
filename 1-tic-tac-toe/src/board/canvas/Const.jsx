@@ -13,4 +13,5 @@ export const boardDimensions = {
     verticalBarHeight: canvasSpecs.canvasHeight,
     horizontalBarWidth: canvasSpecs.canvasWidth,
     horizontalBarHeigth: 10,
+    percentageOfPlaceFilled: 0.7,
 }

@@ -1,5 +1,4 @@
 
-
 export const boardPlacesInitState = () => {
 
     let initialPlaces = [];
@@ -11,7 +10,7 @@ export const boardPlacesInitState = () => {
         for (let j = 0; j < 3; j++) {
             initialPlaces[i][j] = {
                 playerNb: -1,
-                image: null
+                image: "./white.png" // TODO: Change this, for an image not to be needed
             }
         }
     }
@@ -27,18 +26,40 @@ export const initalGameStatus = () => {
     }
 };
 
-export const makeMove = (playerToMove, players, places, boardPlace) => {
 
+export const updateGameOnMouseClick = (row, col, gameVars, gameSetters) => {
+
+    if (gameVars.gameStatus.ended) {
+        return;
+    }
+
+    if (row === -1 || col === -1) {
+        return;
+    }
+
+    let move = makeMove(gameVars.playerToMove, gameVars.players, gameVars.places, row, col);
+
+    if (move.success === true) {
+        gameSetters.setPlayerToMove(move.nextPlayer);
+        gameSetters.setPlaces(move.updatedPlaces);
+    }
+
+    gameSetters.setGameStatus(getGameStatus(gameVars.places));
+
+};
+
+export const makeMove = (playerToMove, players, places, row, col) => {
+    debugger;
     let move = {
         success: false,
         nextPlayer: playerToMove,
         updatedPlaces: places,
     }
 
-    if (places[boardPlace.row][boardPlace.col].image === null) {
+    if (places[row][col].playerNb === -1) {
 
-        places[boardPlace.row][boardPlace.col].playerNb = players[playerToMove].playerNb;
-        places[boardPlace.row][boardPlace.col].image = players[playerToMove].image;
+        places[row][col].playerNb = players[playerToMove].playerNb;
+        places[row][col].image = players[playerToMove].image;
 
         move.success = true;
         move.nextPlayer = playerToMove === 0 ? 1 : 0;
@@ -122,7 +143,7 @@ const getWinnerFromConditions = (places) => {
 const checkIfAllPlacesFilled = (places) => {
     for (let row = 0; row < 3; row++) {
         for (let col = 0; col < 3; col++) {
-            if (places[row][col].image === null) {
+            if (places[row][col].playerNb === -1) {
                 return false;
             }
         }

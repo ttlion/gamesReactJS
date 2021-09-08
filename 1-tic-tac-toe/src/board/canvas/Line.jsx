@@ -3,24 +3,24 @@ import { Graphics } from '@inlet/react-pixi';
 
 import { canvasSpecs, boardDimensions } from "./Const.jsx";
 
-export const VerticalBar = ({ x }) => {
+export const VerticalBar = ({ x, isBorder = false }) => {
 
     return <Rectangle color={canvasSpecs.color.black}
-        x={x - boardDimensions.verticalBarWidth / 2}
+        x={x}
         y={0}
-        width={boardDimensions.verticalBarWidth}
-        height={boardDimensions.verticalBarHeight}
+        width={isBorder ? boardDimensions.verticalBarWidth / 2 : boardDimensions.verticalBarWidth}
+        height={boardDimensions.verticalBarHeight - boardDimensions.horizontalBarHeigth / 2}
     />
 
 };
 
-export const HorizontalBar = ({ y }) => {
+export const HorizontalBar = ({ y, isBorder = false }) => {
 
     return <Rectangle color={canvasSpecs.color.black}
         x={0}
-        y={y - boardDimensions.horizontalBarHeigth / 2}
-        width={boardDimensions.horizontalBarWidth}
-        height={boardDimensions.horizontalBarHeigth}
+        y={y}
+        width={boardDimensions.horizontalBarWidth - boardDimensions.verticalBarWidth / 2}
+        height={isBorder ? boardDimensions.horizontalBarHeigth / 2 : boardDimensions.horizontalBarHeigth}
     />
 
 };
