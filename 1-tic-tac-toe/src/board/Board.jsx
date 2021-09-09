@@ -42,7 +42,7 @@ export const Board = () => {
                 />
             </Row>
 
-            <Row className="mt-2 justify-content-center">
+            <Row className="mt-2 mb-2 justify-content-center">
 
                 <BoardCanvas
                     gameVars={gameVars}
@@ -54,7 +54,7 @@ export const Board = () => {
                         <Col md={8} xs={12} >
                             {
                                 (gameStatus.winnerPlayerNb !== -1 ?
-                                    <PlayerWonMessage playerName={gameStatus.winnerPlayerNb} />
+                                    <PlayerWonMessage playerName={players[gameStatus.winnerPlayerNb].playerName} />
                                     :
                                     <TiedGameMessage />
                                 )

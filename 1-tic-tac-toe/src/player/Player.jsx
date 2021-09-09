@@ -7,11 +7,13 @@ export const playersInitialState = () => {
     return [
         {
             playerNb: 0,
-            image: "./bigX.png" // TODO: null here and dependent on user selection
+            playerName: null,
+            image: "./bigX.png"
         },
         {
             playerNb: 1,
-            image: "./tick.png" // TODO: null here and dependent on user selection
+            playerName: null,
+            image: "./tick.png"
         }
     ]
 };
@@ -37,21 +39,33 @@ export const PlayerForm = ({ gameVars, gameSetters }) => {
     }
 
     const resetGame = () => {
+        document.getElementById("tic-tac-toe-players-form").reset();
         gameSetters.setPlayerToMove(0);
         gameSetters.setPlayers(playersInitialState());
         gameSetters.setPlaces(boardPlacesInitState());
         gameSetters.setGameStatus(initialGameStatus());
     }
 
-    return <Form>
+    const setPlayerName = (name, playerNb) => {
+        gameVars.players[playerNb].playerName = name;
+        gameSetters.setPlayers(gameVars.players);
+    }
+
+    return <Form id="tic-tac-toe-players-form">
         <Row className="justify-content-center" >
             < Col md={4} xs={6} className="text-center" >
                 <Form.Label>Player 1</Form.Label>
-                <Form.Control className="text-center" placeholder={"Enter Player 1 name"} readOnly={gameVars.gameStatus.started} />
+                <Form.Control className="text-center" placeholder={"Enter Player 1 name"}
+                    readOnly={gameVars.gameStatus.started}
+                    onChange={e => setPlayerName(e.target.value, 0)}
+                />
             </Col >
             <Col md={4} xs={6} className="text-center">
                 <Form.Label>Player 2</Form.Label>
-                <Form.Control className="text-center" placeholder={"Enter Player 2 name"} readOnly={gameVars.gameStatus.started} />
+                <Form.Control className="text-center" placeholder={"Enter Player 2 name"}
+                    readOnly={gameVars.gameStatus.started}
+                    onChange={e => setPlayerName(e.target.value, 1)}
+                />
             </Col>
         </Row >
 
