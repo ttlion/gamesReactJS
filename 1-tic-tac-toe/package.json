@@ -2,6 +2,7 @@
   "name": "tic-tac-toe",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://ttlion.github.io/gamesReactJS/1-tic-tac-toe/build/index.html",
   "dependencies": {
     "@inlet/react-pixi": "^6.6.5",
     "bootstrap": "^5.1.1",
