@@ -20,8 +20,9 @@ export const boardPlacesInitState = () => {
 
 };
 
-export const initalGameStatus = () => {
+export const initialGameStatus = () => {
     return {
+        started: false,
         ended: false,
         winnerPlayerNb: -1
     }
