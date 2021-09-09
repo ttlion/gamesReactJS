@@ -1,6 +1,7 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import { boardPlacesInitState, initialGameStatus, startGameStatus } from "../logic/GameLogic.jsx";
 
 export const playersInitialState = () => {
     return [
@@ -17,57 +18,56 @@ export const playersInitialState = () => {
 
 
 export const InitialInfo = () => {
-    return <Alert variant="info" className="text-center">
+    return <Alert variant="info" className="mb-0 text-center">
         <Alert.Heading>Tic-tac-toe</Alert.Heading>
         <p className="mb-0">
-            {"Game info yet to be inserted here"}
+            {"This is a simple tic-tac-toe game done in ReactJS using React PIXI."}
+            <br />
+            {"To play, just insert the players' names and click \"Start Game\"."}
+            <br />
+            {"You can click \"Reset\" in the middle of a game or during a game, which puts everything in its initial state."}
         </p>
     </Alert>
 };
 
 export const PlayerForm = ({ gameVars, gameSetters }) => {
 
-    const [gameInProgress, setGameInProgress] = useState(gameVars.gameStatus.started && !gameVars.gameStatus.ended);
-
     const startGame = () => {
-        gameVars.gameStatus.started = true;
-        gameSetters.setGameStatus(gameVars.gameStatus);
-        setGameInProgress(true);
+        gameSetters.setGameStatus(startGameStatus());
     }
 
     const resetGame = () => {
-        gameVars.gameStatus.started = false;
-        gameVars.gameStatus.ended = false;
-        gameVars.gameStatus.winnerPlayerNb = -1;
-        gameSetters.setGameStatus(gameVars.gameStatus);
-        setGameInProgress(false);
+        gameSetters.setPlayerToMove(0);
+        gameSetters.setPlayers(playersInitialState());
+        gameSetters.setPlaces(boardPlacesInitState());
+        gameSetters.setGameStatus(initialGameStatus());
     }
 
     return <Form>
         <Row className="justify-content-center" >
-            <Col md={4} xs={6} className="text-center">
+            < Col md={4} xs={6} className="text-center" >
                 <Form.Label>Player 1</Form.Label>
-                <Form.Control className="text-center" placeholder={"Enter Player 1 name"} readOnly={gameInProgress} />
-            </Col>
+                <Form.Control className="text-center" placeholder={"Enter Player 1 name"} readOnly={gameVars.gameStatus.started} />
+            </Col >
             <Col md={4} xs={6} className="text-center">
                 <Form.Label>Player 2</Form.Label>
-                <Form.Control className="text-center" placeholder={"Enter Player 2 name"} readOnly={gameInProgress} />
+                <Form.Control className="text-center" placeholder={"Enter Player 2 name"} readOnly={gameVars.gameStatus.started} />
             </Col>
-        </Row>
+        </Row >
 
         <Row className="mt-1 justify-content-center" >
             <Col md={4} xs={6} className="d-grid">
-                <Button variant="success" onClick={startGame} disabled={gameInProgress}>
+                <Button variant="success" onClick={startGame} disabled={gameVars.gameStatus.started}>
                     Start Game
                 </Button>
             </Col>
             <Col md={4} xs={6} className="d-grid">
-                <Button variant="warning" onClick={resetGame} disabled={!gameInProgress}>
+                <Button variant="warning" onClick={resetGame} disabled={!gameVars.gameStatus.started}>
                     Reset
                 </Button>
             </Col>
         </Row>
-    </Form>
+    </Form >
 
 };
 

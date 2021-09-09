@@ -28,6 +28,14 @@ export const initialGameStatus = () => {
     }
 };
 
+export const startGameStatus = () => {
+    return {
+        started: true,
+        ended: false,
+        winnerPlayerNb: -1
+    }
+};
+
 
 export const updateGameOnMouseClick = (row, col, gameVars, gameSetters) => {
 
@@ -46,8 +54,9 @@ export const updateGameOnMouseClick = (row, col, gameVars, gameSetters) => {
         gameSetters.setPlaces(move.updatedPlaces);
     }
 
+
     gameSetters.setGameStatus(getGameStatus(gameVars.places, gameVars.gameStatus));
-    debugger
+
 };
 
 export const makeMove = (playerToMove, players, places, row, col) => {
@@ -81,10 +90,13 @@ export const getGameStatus = (places, gameStatus) => {
     if (winner !== -1) {
         gameStatus.ended = true;
         gameStatus.winnerPlayerNb = winner;
-        debugger;
     }
 
-    return gameStatus;
+    return {
+        started: gameStatus.started,
+        ended: gameStatus.ended,
+        winnerPlayerNb: gameStatus.winnerPlayerNb
+    }
 
 }
 

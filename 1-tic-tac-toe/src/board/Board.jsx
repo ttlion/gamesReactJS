@@ -29,19 +29,20 @@ export const Board = () => {
     }
 
     return (
+
         <Container>
 
             <Row className="mt-1 justify-content-center">
                 <InitialInfo />
             </Row>
 
-            <Row className="mt-1 justify-content-center">
+            <Row className="mt-2 justify-content-center">
                 <PlayerForm gameVars={gameVars}
                     gameSetters={gameSetters}
                 />
             </Row>
 
-            <Row className="mt-1 justify-content-center">
+            <Row className="mt-2 justify-content-center">
 
                 <BoardCanvas
                     gameVars={gameVars}
@@ -62,6 +63,7 @@ export const Board = () => {
                     </Row>
                 }
             </Row>
+
         </Container >
 
     )
