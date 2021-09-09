@@ -1,4 +1,6 @@
 
+import orangeBackground from '../images/orange.png';
+
 export const boardPlacesInitState = () => {
 
     let initialPlaces = [];
@@ -10,7 +12,7 @@ export const boardPlacesInitState = () => {
         for (let j = 0; j < 3; j++) {
             initialPlaces[i][j] = {
                 playerNb: -1,
-                background: "./orange.png",
+                background: orangeBackground,
                 image: null
             }
         }
@@ -23,6 +25,14 @@ export const boardPlacesInitState = () => {
 export const initialGameStatus = () => {
     return {
         started: false,
+        ended: false,
+        winnerPlayerNb: -1
+    }
+};
+
+export const startGameStatus = () => {
+    return {
+        started: true,
         ended: false,
         winnerPlayerNb: -1
     }
@@ -46,8 +56,9 @@ export const updateGameOnMouseClick = (row, col, gameVars, gameSetters) => {
         gameSetters.setPlaces(move.updatedPlaces);
     }
 
+
     gameSetters.setGameStatus(getGameStatus(gameVars.places, gameVars.gameStatus));
-    debugger
+
 };
 
 export const makeMove = (playerToMove, players, places, row, col) => {
@@ -81,10 +92,13 @@ export const getGameStatus = (places, gameStatus) => {
     if (winner !== -1) {
         gameStatus.ended = true;
         gameStatus.winnerPlayerNb = winner;
-        debugger;
     }
 
-    return gameStatus;
+    return {
+        started: gameStatus.started,
+        ended: gameStatus.ended,
+        winnerPlayerNb: gameStatus.winnerPlayerNb
+    }
 
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Board } from './board/Board.jsx';
+import { Board } from './1-tic-tac-toe/board/Board';
 
 export const App = () => {
   return (
