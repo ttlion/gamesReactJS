@@ -30,7 +30,7 @@ const BoardVerticalLines = () => {
             <VerticalBar x={0} isBorder={true} />
             <VerticalBar x={canvasSpecs.canvasWidth / 3 - boardDimensions.verticalBarWidth / 2} />
             <VerticalBar x={2 * canvasSpecs.canvasWidth / 3 - boardDimensions.verticalBarWidth / 2} />
-            <VerticalBar x={canvasSpecs.canvasWidth - boardDimensions.verticalBarWidth} isBorder={true} />
+            <VerticalBar x={canvasSpecs.canvasWidth - boardDimensions.verticalBarWidth / 2} isBorder={true} />
         </>
     )
 }
@@ -41,7 +41,7 @@ const BoardHorizontalLines = () => {
             <HorizontalBar y={0} isBorder={true} />
             <HorizontalBar y={canvasSpecs.canvasHeight / 3 - boardDimensions.horizontalBarHeigth / 2} />
             <HorizontalBar y={2 * canvasSpecs.canvasHeight / 3 - boardDimensions.horizontalBarHeigth / 2} />
-            <HorizontalBar y={canvasSpecs.canvasHeight - boardDimensions.horizontalBarHeigth} isBorder={true} />
+            <HorizontalBar y={canvasSpecs.canvasHeight - boardDimensions.horizontalBarHeigth / 2} isBorder={true} />
         </>
     )
 }

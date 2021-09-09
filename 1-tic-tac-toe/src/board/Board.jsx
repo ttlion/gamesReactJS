@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 
 import { BoardCanvas } from "./canvas/BoardCanvas.jsx";
 import { boardPlacesInitState, initalGameStatus } from "../logic/GameLogic.jsx";
@@ -25,7 +25,7 @@ export const Board = () => {
         setPlayerToMove: setPlayerToMove,
         setPlayers: setPlayers,
         setPlaces: setPlaces,
-        setGameStatus, setGameStatus
+        setGameStatus: setGameStatus
     }
 
     return (

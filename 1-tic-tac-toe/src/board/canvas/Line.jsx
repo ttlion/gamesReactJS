@@ -9,7 +9,7 @@ export const VerticalBar = ({ x, isBorder = false }) => {
         x={x}
         y={0}
         width={isBorder ? boardDimensions.verticalBarWidth / 2 : boardDimensions.verticalBarWidth}
-        height={boardDimensions.verticalBarHeight - boardDimensions.horizontalBarHeigth / 2}
+        height={boardDimensions.verticalBarHeight}
     />
 
 };
@@ -19,7 +19,7 @@ export const HorizontalBar = ({ y, isBorder = false }) => {
     return <Rectangle color={canvasSpecs.color.black}
         x={0}
         y={y}
-        width={boardDimensions.horizontalBarWidth - boardDimensions.verticalBarWidth / 2}
+        width={boardDimensions.horizontalBarWidth}
         height={isBorder ? boardDimensions.horizontalBarHeigth / 2 : boardDimensions.horizontalBarHeigth}
     />
 

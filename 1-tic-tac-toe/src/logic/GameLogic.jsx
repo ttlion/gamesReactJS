@@ -10,7 +10,8 @@ export const boardPlacesInitState = () => {
         for (let j = 0; j < 3; j++) {
             initialPlaces[i][j] = {
                 playerNb: -1,
-                image: "./white.png" // TODO: Change this, for an image not to be needed
+                background: "./orange.png",
+                image: null
             }
         }
     }
@@ -49,7 +50,7 @@ export const updateGameOnMouseClick = (row, col, gameVars, gameSetters) => {
 };
 
 export const makeMove = (playerToMove, players, places, row, col) => {
-    debugger;
+
     let move = {
         success: false,
         nextPlayer: playerToMove,
