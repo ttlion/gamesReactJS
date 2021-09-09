@@ -1,4 +1,6 @@
 
+import orangeBackground from '../images/orange.png';
+
 export const boardPlacesInitState = () => {
 
     let initialPlaces = [];
@@ -10,7 +12,7 @@ export const boardPlacesInitState = () => {
         for (let j = 0; j < 3; j++) {
             initialPlaces[i][j] = {
                 playerNb: -1,
-                background: "./orange.png",
+                background: orangeBackground,
                 image: null
             }
         }

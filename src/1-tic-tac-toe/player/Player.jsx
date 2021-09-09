@@ -3,17 +3,20 @@ import React from 'react';
 import { Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import { boardPlacesInitState, initialGameStatus, startGameStatus } from "../logic/GameLogic.jsx";
 
+import bigX from '../images/bigX.png';
+import tick from '../images/tick.png';
+
 export const playersInitialState = () => {
     return [
         {
             playerNb: 0,
             playerName: null,
-            image: "./bigX.png"
+            image: bigX
         },
         {
             playerNb: 1,
             playerName: null,
-            image: "./tick.png"
+            image: tick
         }
     ]
 };
