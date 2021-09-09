@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Row, Col, Form, Button, Alert } from 'react-bootstrap';
 
 export const playersInitialState = () => {
@@ -25,29 +25,45 @@ export const InitialInfo = () => {
     </Alert>
 };
 
-export const PlayerForm = () => {
+export const PlayerForm = ({ gameVars, gameSetters }) => {
+
+    const [gameInProgress, setGameInProgress] = useState(gameVars.gameStatus.started && !gameVars.gameStatus.ended);
+
+    const startGame = () => {
+        gameVars.gameStatus.started = true;
+        gameSetters.setGameStatus(gameVars.gameStatus);
+        setGameInProgress(true);
+    }
+
+    const resetGame = () => {
+        gameVars.gameStatus.started = false;
+        gameVars.gameStatus.ended = false;
+        gameVars.gameStatus.winnerPlayerNb = -1;
+        gameSetters.setGameStatus(gameVars.gameStatus);
+        setGameInProgress(false);
+    }
 
     return <Form>
         <Row className="justify-content-center" >
             <Col md={4} xs={6} className="text-center">
                 <Form.Label>Player 1</Form.Label>
-                <Form.Control className="text-center" placeholder={"Enter Player 1 name"} readOnly={false} />
+                <Form.Control className="text-center" placeholder={"Enter Player 1 name"} readOnly={gameInProgress} />
             </Col>
             <Col md={4} xs={6} className="text-center">
                 <Form.Label>Player 2</Form.Label>
-                <Form.Control className="text-center" placeholder={"Enter Player 2 name"} readOnly={false} />
+                <Form.Control className="text-center" placeholder={"Enter Player 2 name"} readOnly={gameInProgress} />
             </Col>
         </Row>
 
         <Row className="mt-1 justify-content-center" >
             <Col md={4} xs={6} className="d-grid">
-                <Button variant="success" onClick={() => console.log("Start Game clicked!")} disabled={false}>
+                <Button variant="success" onClick={startGame} disabled={gameInProgress}>
                     Start Game
                 </Button>
             </Col>
             <Col md={4} xs={6} className="d-grid">
-                <Button variant="warning" onClick={() => console.log("Re-start Game clicked!")} disabled={true}>
-                    Re-start Game
+                <Button variant="warning" onClick={resetGame} disabled={!gameInProgress}>
+                    Reset
                 </Button>
             </Col>
         </Row>

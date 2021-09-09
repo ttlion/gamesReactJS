@@ -31,7 +31,7 @@ export const initialGameStatus = () => {
 
 export const updateGameOnMouseClick = (row, col, gameVars, gameSetters) => {
 
-    if (gameVars.gameStatus.ended) {
+    if (!gameVars.gameStatus.started || gameVars.gameStatus.ended) {
         return;
     }
 
@@ -46,8 +46,8 @@ export const updateGameOnMouseClick = (row, col, gameVars, gameSetters) => {
         gameSetters.setPlaces(move.updatedPlaces);
     }
 
-    gameSetters.setGameStatus(getGameStatus(gameVars.places));
-
+    gameSetters.setGameStatus(getGameStatus(gameVars.places, gameVars.gameStatus));
+    debugger
 };
 
 export const makeMove = (playerToMove, players, places, row, col) => {
@@ -72,18 +72,16 @@ export const makeMove = (playerToMove, players, places, row, col) => {
 
 };
 
-export const getGameStatus = (places) => {
+export const getGameStatus = (places, gameStatus) => {
 
-    let gameStatus = {
-        ended: checkIfAllPlacesFilled(places),
-        winnerPlayerNb: -1
-    }
+    gameStatus.ended = checkIfAllPlacesFilled(places);
 
     let winner = getWinnerFromConditions(places);
 
     if (winner !== -1) {
         gameStatus.ended = true;
         gameStatus.winnerPlayerNb = winner;
+        debugger;
     }
 
     return gameStatus;

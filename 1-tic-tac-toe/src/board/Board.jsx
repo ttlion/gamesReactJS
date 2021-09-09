@@ -36,7 +36,9 @@ export const Board = () => {
             </Row>
 
             <Row className="mt-1 justify-content-center">
-                <PlayerForm />
+                <PlayerForm gameVars={gameVars}
+                    gameSetters={gameSetters}
+                />
             </Row>
 
             <Row className="mt-1 justify-content-center">
