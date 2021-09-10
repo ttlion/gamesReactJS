@@ -7,7 +7,7 @@ import { boardPlacesInitState, initialGameStatus } from "../logic/GameLogic.jsx"
 import { InitialInfo, PlayerForm, PlayerWonMessage, TiedGameMessage, playersInitialState } from "../player/Player.jsx";
 
 
-export const Board = () => {
+export const TicTacToeBoard = () => {
 
     const [playerToMove, setPlayerToMove] = useState(0);
     const [players, setPlayers] = useState(playersInitialState());
