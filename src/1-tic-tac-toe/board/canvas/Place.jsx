@@ -1,24 +1,21 @@
 
 import { Sprite } from '@inlet/react-pixi';
 import { updateGameOnMouseClick } from '../../logic/GameLogic.jsx';
-import { canvasSpecs, boardDimensions } from "./Const.jsx";
+import { boardDimensions } from "./Const.jsx";
 
-export const Place = ({ row, col, gameVars, gameSetters }) => {
+export const Place = ({ row, col, placeWidth, placeHeight, gameVars, gameSetters }) => {
 
-    let placeWidth = canvasSpecs.canvasWidth / 3 - boardDimensions.verticalBarWidth;
-    let placeHeight = canvasSpecs.canvasHeight / 3 - boardDimensions.horizontalBarHeigth;
+    let leftPadding = boardDimensions.verticalBarWidth + ((1 - boardDimensions.percentPlaceFill) / 2) * placeWidth;
+    let placeX = leftPadding + col * (boardDimensions.verticalBarWidth + placeWidth);
 
-    let leftPadding = (1 - boardDimensions.percentageOfPlaceFilled) / 2 * placeWidth;
-    let placeX = leftPadding + boardDimensions.verticalBarWidth / 2 + col * canvasSpecs.canvasWidth / 3;
-
-    let topPadding = (1 - boardDimensions.percentageOfPlaceFilled) / 2 * placeHeight;
-    let placeY = topPadding + boardDimensions.horizontalBarHeigth / 2 + row * canvasSpecs.canvasHeight / 3;
+    let topPadding = boardDimensions.horizontalBarHeight + ((1 - boardDimensions.percentPlaceFill) / 2) * placeHeight;
+    let placeY = topPadding + row * (boardDimensions.horizontalBarHeight + placeHeight);
 
     if (gameVars.places[row][col].playerNb === -1) {
         return <Sprite
             image={gameVars.places[row][col].background}
-            x={placeX - leftPadding}
-            y={placeY - topPadding}
+            x={placeX - leftPadding + boardDimensions.verticalBarWidth}
+            y={placeY - topPadding + boardDimensions.horizontalBarHeight}
             width={placeWidth}
             height={placeHeight}
             interactive={true}
@@ -28,8 +25,8 @@ export const Place = ({ row, col, gameVars, gameSetters }) => {
         return <>
             <Sprite
                 image={gameVars.places[row][col].background}
-                x={placeX - leftPadding}
-                y={placeY - topPadding}
+                x={placeX - leftPadding + boardDimensions.verticalBarWidth}
+                y={placeY - topPadding + boardDimensions.horizontalBarHeight}
                 width={placeWidth}
                 height={placeHeight}
             />
@@ -37,8 +34,8 @@ export const Place = ({ row, col, gameVars, gameSetters }) => {
                 image={gameVars.places[row][col].image}
                 x={placeX}
                 y={placeY}
-                width={placeWidth * boardDimensions.percentageOfPlaceFilled}
-                height={placeHeight * boardDimensions.percentageOfPlaceFilled}
+                width={placeWidth * boardDimensions.percentPlaceFill}
+                height={placeHeight * boardDimensions.percentPlaceFill}
             />
         </>
     }

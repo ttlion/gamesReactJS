@@ -1,7 +1,7 @@
 
 import { Sprite } from '@inlet/react-pixi';
 import bigX from "./../../images/bigX.png";
-import { boardDimensions, placeDimensions } from './Const';
+import { boardDimensions } from './Const';
 
 export const Place = ({ row, col, placeWidth, placeHeight }) => {
 

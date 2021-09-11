@@ -1,26 +1,24 @@
 import React, { useCallback } from 'react';
 import { Graphics } from '@inlet/react-pixi';
 
-import { canvasSpecs, boardDimensions } from "./Const.jsx";
+export const VerticalBar = ({ x, width, height, color }) => {
 
-export const VerticalBar = ({ x }) => {
-
-    return <Rectangle color={canvasSpecs.color.black}
+    return <Rectangle color={color}
         x={x}
         y={0}
-        width={boardDimensions.verticalBarWidth}
-        height={canvasSpecs.canvasHeight}
+        width={width}
+        height={height}
     />
 
 };
 
-export const HorizontalBar = ({ y }) => {
+export const HorizontalBar = ({ y, width, height, color }) => {
 
-    return <Rectangle color={canvasSpecs.color.black}
+    return <Rectangle color={color}
         x={0}
         y={y}
-        width={canvasSpecs.canvasWidth}
-        height={boardDimensions.horizontalBarHeight}
+        width={width}
+        height={height}
     />
 
 };

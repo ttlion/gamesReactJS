@@ -3,14 +3,12 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 
 import { Stage } from "@inlet/react-pixi";
-import { boardDimensions, canvasSpecs, placeDimensions } from "./Const";
-import { HorizontalBar, VerticalBar } from "./Line";
+import { boardDimensions, canvasSpecs } from "./Const";
+
 import { Place } from "./Place.jsx";
+import { GridBoardCanvas, getPlaceGridHeight, getPlaceGridWidth } from '../../../util/canvas/gridBoard/GridBoardCanvas';
 
 export const BoardCanvas = ({ gameVars, gameSetters }) => {
-
-    let placeHeight = (canvasSpecs.canvasHeight - (gameVars.boardDims.nbRows + 1) * boardDimensions.horizontalBarHeight) / gameVars.boardDims.nbRows;
-    let placeWidth = (canvasSpecs.canvasWidth - (gameVars.boardDims.nbCols + 1) * boardDimensions.verticalBarWidth) / gameVars.boardDims.nbCols;
 
     return (
         <Container>
@@ -21,13 +19,20 @@ export const BoardCanvas = ({ gameVars, gameSetters }) => {
                 }}
             >
 
-                <BoardLines
-                    nbRows={gameVars.boardDims.nbRows + 1} spaceBetweenRows={placeHeight}
-                    nbCols={gameVars.boardDims.nbCols + 1} spaceBetweenCols={placeWidth}
+                <GridBoardCanvas boardWidth={canvasSpecs.canvasWidth}
+                    boardHeight={canvasSpecs.canvasHeight}
+                    nbRows={gameVars.boardDims.nbRows}
+                    horizontalBarHeight={boardDimensions.horizontalBarHeight}
+                    nbCols={gameVars.boardDims.nbCols}
+                    verticalBarWidth={boardDimensions.verticalBarWidth}
+                    gridColor={canvasSpecs.color.black}
                 />
 
-                <BoardPlaces nbRows={gameVars.boardDims.nbRows} nbCols={gameVars.boardDims.nbCols}
-                    placeHeight={placeHeight} placeWidth={placeWidth}
+                <BoardPlaces
+                    nbRows={gameVars.boardDims.nbRows}
+                    nbCols={gameVars.boardDims.nbCols}
+                    placeHeight={getPlaceGridHeight(canvasSpecs.canvasHeight, gameVars.boardDims.nbRows, boardDimensions.horizontalBarHeight)}
+                    placeWidth={getPlaceGridWidth(canvasSpecs.canvasWidth, gameVars.boardDims.nbCols, boardDimensions.verticalBarWidth)}
                 />
 
             </Stage>
@@ -35,27 +40,6 @@ export const BoardCanvas = ({ gameVars, gameSetters }) => {
     )
 
 };
-
-const BoardLines = ({ nbRows, spaceBetweenRows, nbCols, spaceBetweenCols }) => {
-
-    let allHorizontalLinesArray = [];
-    let allVerticalLinesArray = [];
-
-    for (let i = 0; i < nbRows; i++) {
-        allHorizontalLinesArray[i] = <HorizontalBar y={i * (boardDimensions.horizontalBarHeight + spaceBetweenRows)} />;
-    }
-
-    for (let i = 0; i < nbCols; i++) {
-        allVerticalLinesArray[i] = <VerticalBar x={i * (boardDimensions.verticalBarWidth + spaceBetweenCols)} />;
-    }
-
-    return (
-        <>
-            {allHorizontalLinesArray}
-            {allVerticalLinesArray}
-        </>
-    )
-}
 
 const BoardPlaces = ({ nbRows, nbCols, placeHeight, placeWidth }) => {
 
