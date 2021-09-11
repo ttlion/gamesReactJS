@@ -1,10 +1,11 @@
 
 import React, { useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Alert } from 'react-bootstrap';
 
 import { BoardCanvas } from "./canvas/BoardCanvas.jsx";
 import { InitialInfo, PlayerForm, boardDimsInitialState } from "../player/Player.jsx";
 import { boardPlacesInitState, initialGameStatus } from '../logic/GameLogic.jsx';
+import { resultTypes } from './canvas/Const.jsx';
 
 export const MineSweeperBoard = () => {
 
@@ -40,8 +41,30 @@ export const MineSweeperBoard = () => {
                 <BoardCanvas gameVars={gameVars} gameSetters={gameSetters} />
             </Row>
 
+            {gameStatus.ended &&
+                <Row className="mt-1 justify-content-center">
+                    <Col md={8} xs={12} > {
+                        (gameStatus.result === resultTypes.win ? <PlayerWon /> : <PlayerLost />)
+                    } </Col>
+                </Row>
+            }
+
         </Container >
 
     )
 
+};
+
+
+export const PlayerWon = () => {
+    return <Alert variant="success" className="text-center">
+        {"Game ended, you won!"}
+    </Alert>;
+};
+
+
+export const PlayerLost = () => {
+    return <Alert variant="danger" className="text-center">
+        {"Game ended, you lost!"}
+    </Alert>
 };

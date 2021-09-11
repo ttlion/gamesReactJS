@@ -48,3 +48,9 @@ export const placeTypes = {
     number: 3
 }
 
+export const resultTypes = {
+    progress: -1,
+    win: 0,
+    lose: 1
+}
+

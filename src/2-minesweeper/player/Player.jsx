@@ -31,18 +31,15 @@ export const PlayerForm = ({ gameVars, gameSetters }) => {
 
     const resetGame = () => {
         document.getElementById("minesweeper-form").reset();
-        gameSetters.setBoardDims(boardDimsInitialState());
-        gameSetters.setPlaces(boardPlacesInitState(gameVars.boardDims.nbRows, gameVars.boardDims.nbCols))
-        gameSetters.setGameStatus(initialGameStatus(gameVars.boardDims.nbRows * gameVars.boardDims.nbCols))
-
-
-
-        gameVars.gameStatus.started = true;
-        gameSetters.setGameStatus({ ...gameVars.gameStatus });
+        let initialBoardDims = boardDimsInitialState();
+        gameSetters.setPlaces(boardPlacesInitState(initialBoardDims.nbRows, initialBoardDims.nbCols));
+        gameSetters.setGameStatus(initialGameStatus(initialBoardDims.nbRows * initialBoardDims.nbCols));
+        gameSetters.setBoardDims(initialBoardDims);
     }
 
     const setNbRows = (nbRows) => {
         gameSetters.setPlaces(boardPlacesInitState(nbRows, gameVars.boardDims.nbCols))
+        gameSetters.setGameStatus(initialGameStatus(nbRows * gameVars.boardDims.nbCols));
         gameSetters.setBoardDims({
             nbRows: nbRows,
             nbCols: gameVars.boardDims.nbCols,
@@ -52,6 +49,7 @@ export const PlayerForm = ({ gameVars, gameSetters }) => {
 
     const setNbCols = (nbCols) => {
         gameSetters.setPlaces(boardPlacesInitState(gameVars.boardDims.nbRows, nbCols))
+        gameSetters.setGameStatus(initialGameStatus(gameVars.boardDims.nbRows * nbCols));
         gameSetters.setBoardDims({
             nbRows: gameVars.boardDims.nbRows,
             nbCols: nbCols,

@@ -1,5 +1,5 @@
 
-import { placeImages, placeTypes } from '../board/canvas/Const';
+import { placeImages, placeTypes, resultTypes } from '../board/canvas/Const';
 
 export const boardPlacesInitState = (nbRows, nbCols) => {
 
@@ -27,6 +27,7 @@ export const initialGameStatus = (totalNbPlaces) => {
     return {
         started: false,
         ended: false,
+        result: resultTypes.progress,
         numberUnsuccessPlaces: getTotalNumberUnsuccesses(totalNbPlaces),
         numberCoveredPlaces: totalNbPlaces
     }
@@ -34,7 +35,7 @@ export const initialGameStatus = (totalNbPlaces) => {
 
 const getTotalNumberUnsuccesses = (totalNbPlaces) => {
     // TODO: I could adjust this variable according to difficulty mode
-    return Math.round(0.2 * totalNbPlaces);
+    return Math.ceil(0.1 * totalNbPlaces);
 }
 
 const getRandomizedUnsuccess = (totalNbPlaces, initialPlaces) => {
@@ -150,30 +151,42 @@ export const updateGameOnMouseClick = (row, col, gameVars, gameSetters) => {
     let placedClicked = gameVars.places[row * gameVars.boardDims.nbCols + col];
 
     if (placedClicked.type === placeTypes.empty) {
-        turnEmptyPlacesUp(row, col, gameVars.boardDims.nbRows, gameVars.boardDims.nbCols, gameVars.places);
+        turnEmptyPlacesUp(row, col, gameVars.boardDims.nbRows, gameVars.boardDims.nbCols, gameVars.places, gameVars.gameStatus);
         gameSetters.setPlaces([...gameVars.places]);
     }
     else if (placedClicked.type === placeTypes.number) {
         placedClicked.up = true;
         gameVars.places[row * gameVars.boardDims.nbCols + col] = placedClicked;
+        gameVars.gameStatus.numberCoveredPlaces--;
         gameSetters.setPlaces([...gameVars.places]);
     }
     else if (placedClicked.type === placeTypes.unsuccess) {
         placedClicked.up = true;
         gameVars.places[row * gameVars.boardDims.nbCols + col] = placedClicked;
         gameSetters.setPlaces([...gameVars.places]);
-        // TODO: Mark game as lost
+
+        gameVars.gameStatus.result = resultTypes.lose;
+        gameVars.gameStatus.ended = true;
     }
+
+    if (gameVars.gameStatus.numberCoveredPlaces === gameVars.gameStatus.numberUnsuccessPlaces) {
+        gameVars.gameStatus.result = resultTypes.win;
+        gameVars.gameStatus.ended = true;
+    }
+
+    gameSetters.setGameStatus({ ...gameVars.gameStatus });
+
 
 };
 
-const turnEmptyPlacesUp = (row, col, nbRows, nbCols, places) => {
+const turnEmptyPlacesUp = (row, col, nbRows, nbCols, places, gameStatus) => {
 
     if (places[row * nbCols + col].up) {
         return;
     }
 
     places[row * nbCols + col].up = true;
+    gameStatus.numberCoveredPlaces--;
 
     if (places[row * nbCols + col].type !== placeTypes.empty) {
         return;
@@ -188,7 +201,7 @@ const turnEmptyPlacesUp = (row, col, nbRows, nbCols, places) => {
                 continue;
             }
 
-            turnEmptyPlacesUp(row + i, col + j, nbRows, nbCols, places);
+            turnEmptyPlacesUp(row + i, col + j, nbRows, nbCols, places, gameStatus);
 
         }
     }

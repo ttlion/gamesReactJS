@@ -11,33 +11,31 @@ import { GridBoardCanvas, getPlaceGridHeight, getPlaceGridWidth } from '../../..
 export const BoardCanvas = ({ gameVars, gameSetters }) => {
 
     return (
-        <Container>
-            <Stage width={canvasSpecs.canvasWidth}
-                height={canvasSpecs.canvasHeight}
-                options={{
-                    backgroundColor: canvasSpecs.color.white
-                }}
-            >
+        <Stage width={canvasSpecs.canvasWidth}
+            height={canvasSpecs.canvasHeight}
+            options={{
+                backgroundColor: canvasSpecs.color.white
+            }}
+        >
 
-                <GridBoardCanvas boardWidth={canvasSpecs.canvasWidth}
-                    boardHeight={canvasSpecs.canvasHeight}
-                    nbRows={gameVars.boardDims.nbRows}
-                    horizontalBarHeight={boardDimensions.horizontalBarHeight}
-                    nbCols={gameVars.boardDims.nbCols}
-                    verticalBarWidth={boardDimensions.verticalBarWidth}
-                    gridColor={canvasSpecs.color.black}
-                />
+            <GridBoardCanvas boardWidth={canvasSpecs.canvasWidth}
+                boardHeight={canvasSpecs.canvasHeight}
+                nbRows={gameVars.boardDims.nbRows}
+                horizontalBarHeight={boardDimensions.horizontalBarHeight}
+                nbCols={gameVars.boardDims.nbCols}
+                verticalBarWidth={boardDimensions.verticalBarWidth}
+                gridColor={canvasSpecs.color.black}
+            />
 
-                <BoardPlaces
-                    nbRows={gameVars.boardDims.nbRows}
-                    nbCols={gameVars.boardDims.nbCols}
-                    placeHeight={getPlaceGridHeight(canvasSpecs.canvasHeight, gameVars.boardDims.nbRows, boardDimensions.horizontalBarHeight)}
-                    placeWidth={getPlaceGridWidth(canvasSpecs.canvasWidth, gameVars.boardDims.nbCols, boardDimensions.verticalBarWidth)}
-                    gameVars={gameVars} gameSetters={gameSetters}
-                />
+            <BoardPlaces
+                nbRows={gameVars.boardDims.nbRows}
+                nbCols={gameVars.boardDims.nbCols}
+                placeHeight={getPlaceGridHeight(canvasSpecs.canvasHeight, gameVars.boardDims.nbRows, boardDimensions.horizontalBarHeight)}
+                placeWidth={getPlaceGridWidth(canvasSpecs.canvasWidth, gameVars.boardDims.nbCols, boardDimensions.verticalBarWidth)}
+                gameVars={gameVars} gameSetters={gameSetters}
+            />
 
-            </Stage>
-        </Container>
+        </Stage>
     )
 
 };
