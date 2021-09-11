@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import { boardPlacesInitState } from '../logic/GameLogic';
 
 export const boardDimsInitialState = () => {
     return {
@@ -33,13 +34,16 @@ export const PlayerForm = ({ gameVars, gameSetters }) => {
     }
 
     const setNbRows = (nbRows) => {
+        gameSetters.setPlaces(boardPlacesInitState(nbRows, gameVars.boardDims.nbCols))
         gameSetters.setBoardDims({
             nbRows: nbRows,
             nbCols: gameVars.boardDims.nbCols,
         });
+
     }
 
     const setNbCols = (nbCols) => {
+        gameSetters.setPlaces(boardPlacesInitState(gameVars.boardDims.nbRows, nbCols))
         gameSetters.setBoardDims({
             nbRows: gameVars.boardDims.nbRows,
             nbCols: nbCols,

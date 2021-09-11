@@ -33,6 +33,7 @@ export const BoardCanvas = ({ gameVars, gameSetters }) => {
                     nbCols={gameVars.boardDims.nbCols}
                     placeHeight={getPlaceGridHeight(canvasSpecs.canvasHeight, gameVars.boardDims.nbRows, boardDimensions.horizontalBarHeight)}
                     placeWidth={getPlaceGridWidth(canvasSpecs.canvasWidth, gameVars.boardDims.nbCols, boardDimensions.verticalBarWidth)}
+                    gameVars={gameVars} gameSetters={gameSetters}
                 />
 
             </Stage>
@@ -41,14 +42,17 @@ export const BoardCanvas = ({ gameVars, gameSetters }) => {
 
 };
 
-const BoardPlaces = ({ nbRows, nbCols, placeHeight, placeWidth }) => {
+const BoardPlaces = ({ nbRows, nbCols, placeHeight, placeWidth, gameVars, gameSetters }) => {
 
     let allPlacesArray = [];
 
     for (let row = 0; row < nbRows; row++) {
         for (let col = 0; col < nbCols; col++) {
             allPlacesArray[row * nbCols + col] =
-                <Place row={row} col={col} placeWidth={placeWidth} placeHeight={placeHeight} />;
+                <Place row={row} col={col}
+                    placeWidth={placeWidth} placeHeight={placeHeight}
+                    gameVars={gameVars} gameSetters={gameSetters}
+                />;
         }
     }
 
