@@ -1,5 +1,5 @@
 
-import { placeImages } from '../board/canvas/Const';
+import { placeImages, placeTypes } from '../board/canvas/Const';
 
 export const boardPlacesInitState = (nbRows, nbCols) => {
 
@@ -8,7 +8,8 @@ export const boardPlacesInitState = (nbRows, nbCols) => {
     for (let row = 0; row < nbRows; row++) {
         for (let col = 0; col < nbCols; col++) {
             initialPlaces[row * nbCols + col] = {
-                up: true,
+                up: false,
+                type: placeTypes.empty,
                 image: placeImages.empty,
             }
         }
@@ -22,9 +23,23 @@ export const boardPlacesInitState = (nbRows, nbCols) => {
 
 };
 
+export const initialGameStatus = (totalNbPlaces) => {
+    return {
+        started: false,
+        ended: false,
+        numberUnsuccessPlaces: getTotalNumberUnsuccesses(totalNbPlaces),
+        numberCoveredPlaces: totalNbPlaces
+    }
+};
+
+const getTotalNumberUnsuccesses = (totalNbPlaces) => {
+    // TODO: I could adjust this variable according to difficulty mode
+    return Math.round(0.2 * totalNbPlaces);
+}
+
 const getRandomizedUnsuccess = (totalNbPlaces, initialPlaces) => {
 
-    let totalNbUnsuccesses = Math.round(0.2 * totalNbPlaces);
+    let totalNbUnsuccesses = getTotalNumberUnsuccesses(totalNbPlaces);
 
     let placesWithUnsuccess = new Set();
 
@@ -34,6 +49,7 @@ const getRandomizedUnsuccess = (totalNbPlaces, initialPlaces) => {
             randomPlace = getRandomInt(0, totalNbPlaces);
         }
         placesWithUnsuccess.add(randomPlace);
+        initialPlaces[randomPlace].type = placeTypes.unsuccess;
         initialPlaces[randomPlace].image = placeImages.unsuccess;
     }
 
@@ -73,27 +89,35 @@ const addUnsuccessNearPlace = (row, col, nbRows, nbCols, initialPlaces) => {
     }
 
     if (currImage === placeImages.empty) {
+        initialPlaces[row * nbCols + col].type = placeTypes.number;
         initialPlaces[row * nbCols + col].image = placeImages.distanceOne;
     }
     else if (currImage === placeImages.distanceOne) {
+        initialPlaces[row * nbCols + col].type = placeTypes.number;
         initialPlaces[row * nbCols + col].image = placeImages.distanceTwo;
     }
     else if (currImage === placeImages.distanceTwo) {
+        initialPlaces[row * nbCols + col].type = placeTypes.number;
         initialPlaces[row * nbCols + col].image = placeImages.distanceThree;
     }
     else if (currImage === placeImages.distanceThree) {
+        initialPlaces[row * nbCols + col].type = placeTypes.number;
         initialPlaces[row * nbCols + col].image = placeImages.distanceFour;
     }
     else if (currImage === placeImages.distanceFour) {
+        initialPlaces[row * nbCols + col].type = placeTypes.number;
         initialPlaces[row * nbCols + col].image = placeImages.distanceFive;
     }
     else if (currImage === placeImages.distanceFive) {
+        initialPlaces[row * nbCols + col].type = placeTypes.number;
         initialPlaces[row * nbCols + col].image = placeImages.distanceSix;
     }
     else if (currImage === placeImages.distanceSix) {
+        initialPlaces[row * nbCols + col].type = placeTypes.number;
         initialPlaces[row * nbCols + col].image = placeImages.distanceSeven;
     }
     else if (currImage === placeImages.distanceSeven) {
+        initialPlaces[row * nbCols + col].type = placeTypes.number;
         initialPlaces[row * nbCols + col].image = placeImages.distanceEight;
     }
 
@@ -113,35 +137,61 @@ const getRandomInt = (min, max) => {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-export const initialGameStatus = () => {
-    return {
-        started: false,
-        ended: false,
-        victory: false
+export const updateGameOnMouseClick = (row, col, gameVars, gameSetters) => {
+
+    if (!gameVars.gameStatus.started || gameVars.gameStatus.ended) {
+        return;
     }
+
+    if (row === -1 || col === -1) {
+        return;
+    }
+
+    let placedClicked = gameVars.places[row * gameVars.boardDims.nbCols + col];
+
+    if (placedClicked.type === placeTypes.empty) {
+        turnEmptyPlacesUp(row, col, gameVars.boardDims.nbRows, gameVars.boardDims.nbCols, gameVars.places);
+        gameSetters.setPlaces([...gameVars.places]);
+    }
+    else if (placedClicked.type === placeTypes.number) {
+        placedClicked.up = true;
+        gameVars.places[row * gameVars.boardDims.nbCols + col] = placedClicked;
+        gameSetters.setPlaces([...gameVars.places]);
+    }
+    else if (placedClicked.type === placeTypes.unsuccess) {
+        placedClicked.up = true;
+        gameVars.places[row * gameVars.boardDims.nbCols + col] = placedClicked;
+        gameSetters.setPlaces([...gameVars.places]);
+        // TODO: Mark game as lost
+    }
+
 };
 
-// export const startGameStatus = () => {
-//     return {
-//         started: true,
-//         ended: false,
-//         victory: false
-//     }
-// };
+const turnEmptyPlacesUp = (row, col, nbRows, nbCols, places) => {
 
+    if (places[row * nbCols + col].up) {
+        return;
+    }
 
-// export const updateGameOnMouseClick = (row, col, gameVars, gameSetters) => {
+    places[row * nbCols + col].up = true;
 
-//     TODO
-//     if (!gameVars.gameStatus.started || gameVars.gameStatus.ended) {
-//         return;
-//     }
+    if (places[row * nbCols + col].type !== placeTypes.empty) {
+        return;
+    }
 
-//     if (row === -1 || col === -1) {
-//         return;
-//     }
+    for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
 
-//     let move = makeMove(gameVars.playerToMove, gameVars.players, gameVars.places, row, col);
+            if ((i === 0 && j == 0)
+                || row + i < 0 || row + i >= nbRows
+                || col + j < 0 || col + j >= nbCols) {
+                continue;
+            }
 
-// };
+            turnEmptyPlacesUp(row + i, col + j, nbRows, nbCols, places);
+
+        }
+    }
+
+};
 

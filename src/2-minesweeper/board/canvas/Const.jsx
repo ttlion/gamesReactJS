@@ -42,3 +42,9 @@ export const placeImages = {
     unsuccess: bomb
 }
 
+export const placeTypes = {
+    empty: 1,
+    unsuccess: 2,
+    number: 3
+}
+

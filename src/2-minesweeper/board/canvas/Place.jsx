@@ -1,6 +1,7 @@
 
 import { Sprite } from '@inlet/react-pixi';
 import { boardDimensions, placeImages } from './Const';
+import { updateGameOnMouseClick } from '../../logic/GameLogic';
 
 export const Place = ({ row, col, placeWidth, placeHeight, gameVars, gameSetters }) => {
 
@@ -37,6 +38,8 @@ export const Place = ({ row, col, placeWidth, placeHeight, gameVars, gameSetters
             y={placeY - topPadding + boardDimensions.horizontalBarHeight}
             width={placeWidth}
             height={placeHeight}
+            interactive={true}
+            pointerdown={() => updateGameOnMouseClick(row, col, gameVars, gameSetters)}
         />
     }
 

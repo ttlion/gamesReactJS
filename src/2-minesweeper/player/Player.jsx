@@ -1,12 +1,12 @@
 
 import React from 'react';
 import { Row, Col, Form, Button, Alert } from 'react-bootstrap';
-import { boardPlacesInitState } from '../logic/GameLogic';
+import { boardPlacesInitState, initialGameStatus } from '../logic/GameLogic';
 
 export const boardDimsInitialState = () => {
     return {
-        nbRows: 2,
-        nbCols: 3,
+        nbRows: 10,
+        nbCols: 10,
     }
 };
 
@@ -25,12 +25,20 @@ export const InitialInfo = () => {
 export const PlayerForm = ({ gameVars, gameSetters }) => {
 
     const startGame = () => {
-        //TODO
+        gameVars.gameStatus.started = true;
+        gameSetters.setGameStatus({ ...gameVars.gameStatus });
     }
 
     const resetGame = () => {
-        //TODO
         document.getElementById("minesweeper-form").reset();
+        gameSetters.setBoardDims(boardDimsInitialState());
+        gameSetters.setPlaces(boardPlacesInitState(gameVars.boardDims.nbRows, gameVars.boardDims.nbCols))
+        gameSetters.setGameStatus(initialGameStatus(gameVars.boardDims.nbRows * gameVars.boardDims.nbCols))
+
+
+
+        gameVars.gameStatus.started = true;
+        gameSetters.setGameStatus({ ...gameVars.gameStatus });
     }
 
     const setNbRows = (nbRows) => {
@@ -52,28 +60,30 @@ export const PlayerForm = ({ gameVars, gameSetters }) => {
 
     return <Form id="minesweeper-form">
         <Row className="justify-content-center" >
-            < Col md={4} xs={6} className="text-center" >
-                <Form.Label>Nb rows</Form.Label>
-                <Form.Control className="text-center" placeholder={"Enter Nb rows"}
+            < Col md={2} xs={6} className="text-center" >
+                <Form.Label>Number of rows</Form.Label>
+                <Form.Control className="text-center" placeholder={gameVars.boardDims.nbRows}
+                    readOnly={gameVars.gameStatus.started}
                     onChange={e => setNbRows(parseInt(e.target.value))}
                 />
             </Col >
-            <Col md={4} xs={6} className="text-center">
-                <Form.Label>Nb cols</Form.Label>
-                <Form.Control className="text-center" placeholder={"Enter Nb cols"}
+            <Col md={2} xs={6} className="text-center">
+                <Form.Label>Number of columns</Form.Label>
+                <Form.Control className="text-center" placeholder={gameVars.boardDims.nbCols}
+                    readOnly={gameVars.gameStatus.started}
                     onChange={e => setNbCols(parseInt(e.target.value))}
                 />
             </Col>
         </Row >
 
         <Row className="mt-1 justify-content-center" >
-            <Col md={4} xs={6} className="d-grid">
-                <Button variant="success" onClick={startGame} disabled={false}>
+            <Col md={2} xs={6} className="d-grid">
+                <Button variant="success" onClick={startGame} disabled={gameVars.gameStatus.started}>
                     Start Game
                 </Button>
             </Col>
-            <Col md={4} xs={6} className="d-grid">
-                <Button variant="warning" onClick={resetGame} disabled={false}>
+            <Col md={2} xs={6} className="d-grid">
+                <Button variant="warning" onClick={resetGame} disabled={!gameVars.gameStatus.started}>
                     Reset
                 </Button>
             </Col>

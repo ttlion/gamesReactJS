@@ -3,22 +3,25 @@ import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
 import { BoardCanvas } from "./canvas/BoardCanvas.jsx";
-import { InitialInfo, PlayerForm, PlayerWonMessage, TiedGameMessage, boardDimsInitialState } from "../player/Player.jsx";
-import { boardPlacesInitState } from '../logic/GameLogic.jsx';
+import { InitialInfo, PlayerForm, boardDimsInitialState } from "../player/Player.jsx";
+import { boardPlacesInitState, initialGameStatus } from '../logic/GameLogic.jsx';
 
 export const MineSweeperBoard = () => {
 
     const [boardDims, setBoardDims] = useState(boardDimsInitialState());
     const [places, setPlaces] = useState(boardPlacesInitState(boardDims.nbRows, boardDims.nbCols));
+    const [gameStatus, setGameStatus] = useState(initialGameStatus(boardDims.nbRows * boardDims.nbCols))
 
     let gameVars = {
         boardDims: boardDims,
         places: places,
+        gameStatus: gameStatus,
     }
 
     let gameSetters = {
         setBoardDims: setBoardDims,
         setPlaces: setPlaces,
+        setGameStatus: setGameStatus,
     }
 
     return (
