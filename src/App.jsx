@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Contents } from './0-organization/Contents.jsx';
 import { Footer } from './0-organization/GameFrame.jsx';
 import { TicTacToeBoard } from './1-tic-tac-toe/board/Board.jsx';
+import { MineSweeperBoard } from "./2-minesweeper/board/Board.jsx";
 
 export const App = () => {
 
@@ -11,14 +12,16 @@ export const App = () => {
 
     <div className="App">
 
-      {pageSelected === 0 && <Contents setPageSelected={setPageSelected} />}
+      <MineSweeperBoard />
+
+      {/* {pageSelected === 0 && <Contents setPageSelected={setPageSelected} />}
 
       {pageSelected === 1 &&
         <>
           <TicTacToeBoard />
           <Footer setPageSelected={setPageSelected} />
         </>
-      }
+      } */}
 
     </div>
 
