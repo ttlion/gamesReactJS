@@ -11,6 +11,8 @@ import numberSeven from './../../images/number7.png';
 import numberEight from './../../images/number8.png';
 import confetti from './../../images/confetti.png';
 import bomb from './../../images/bomb.png';
+import greenBackground from './../../images/green.jpg';
+import redBackground from './../../images/red.jpg';
 
 export const canvasSpecs = {
     canvasWidth: 500,
@@ -39,7 +41,9 @@ export const placeImages = {
     distanceSeven: numberSeven,
     distanceEight: numberEight,
     success: confetti,
-    unsuccess: bomb
+    unsuccess: bomb,
+    winBackground: greenBackground,
+    loseBackground: redBackground,
 }
 
 export const placeTypes = {
