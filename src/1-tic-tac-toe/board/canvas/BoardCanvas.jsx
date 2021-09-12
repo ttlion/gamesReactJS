@@ -1,7 +1,7 @@
 
 import { Stage } from "@inlet/react-pixi";
+import { GridBoardCanvas, getPlaceGridHeight, getPlaceGridWidth } from "../../../util/canvas/gridBoard/GridBoardCanvas";
 import { boardDimensions, canvasSpecs } from "./Const";
-import { HorizontalBar, VerticalBar } from "./Line";
 import { Place } from "./Place.jsx";
 
 export const BoardCanvas = ({ gameVars, gameSetters }) => {
@@ -14,8 +14,15 @@ export const BoardCanvas = ({ gameVars, gameSetters }) => {
             }}
         >
 
-            <BoardVerticalLines />
-            <BoardHorizontalLines />
+            <GridBoardCanvas boardWidth={canvasSpecs.canvasWidth}
+                boardHeight={canvasSpecs.canvasHeight}
+                nbRows={3}
+                horizontalBarHeight={boardDimensions.horizontalBarHeight}
+                nbCols={3}
+                verticalBarWidth={boardDimensions.verticalBarWidth}
+                gridColor={canvasSpecs.color.black}
+            />
+
             <BoardPlaces gameVars={gameVars} gameSetters={gameSetters} />
 
         </Stage>
@@ -24,42 +31,24 @@ export const BoardCanvas = ({ gameVars, gameSetters }) => {
 };
 
 
-const BoardVerticalLines = () => {
-    return (
-        <>
-            <VerticalBar x={0} isBorder={true} />
-            <VerticalBar x={canvasSpecs.canvasWidth / 3 - boardDimensions.verticalBarWidth / 2} />
-            <VerticalBar x={2 * canvasSpecs.canvasWidth / 3 - boardDimensions.verticalBarWidth / 2} />
-            <VerticalBar x={canvasSpecs.canvasWidth - boardDimensions.verticalBarWidth / 2} isBorder={true} />
-        </>
-    )
-}
-
-const BoardHorizontalLines = () => {
-    return (
-        <>
-            <HorizontalBar y={0} isBorder={true} />
-            <HorizontalBar y={canvasSpecs.canvasHeight / 3 - boardDimensions.horizontalBarHeigth / 2} />
-            <HorizontalBar y={2 * canvasSpecs.canvasHeight / 3 - boardDimensions.horizontalBarHeigth / 2} />
-            <HorizontalBar y={canvasSpecs.canvasHeight - boardDimensions.horizontalBarHeigth / 2} isBorder={true} />
-        </>
-    )
-}
-
 const BoardPlaces = ({ gameVars, gameSetters }) => {
+
+    let placeWidth = getPlaceGridWidth(canvasSpecs.canvasWidth, 3, boardDimensions.verticalBarWidth);
+    let placeHeight = getPlaceGridHeight(canvasSpecs.canvasHeight, 3, boardDimensions.horizontalBarHeight);
+
     return (
         <>
-            <Place row={0} col={0} gameVars={gameVars} gameSetters={gameSetters} />
-            <Place row={0} col={1} gameVars={gameVars} gameSetters={gameSetters} />
-            <Place row={0} col={2} gameVars={gameVars} gameSetters={gameSetters} />
+            <Place row={0} col={0} placeWidth={placeWidth} placeHeight={placeHeight} gameVars={gameVars} gameSetters={gameSetters} />
+            <Place row={0} col={1} placeWidth={placeWidth} placeHeight={placeHeight} gameVars={gameVars} gameSetters={gameSetters} />
+            <Place row={0} col={2} placeWidth={placeWidth} placeHeight={placeHeight} gameVars={gameVars} gameSetters={gameSetters} />
 
-            <Place row={1} col={0} gameVars={gameVars} gameSetters={gameSetters} />
-            <Place row={1} col={1} gameVars={gameVars} gameSetters={gameSetters} />
-            <Place row={1} col={2} gameVars={gameVars} gameSetters={gameSetters} />
+            <Place row={1} col={0} placeWidth={placeWidth} placeHeight={placeHeight} gameVars={gameVars} gameSetters={gameSetters} />
+            <Place row={1} col={1} placeWidth={placeWidth} placeHeight={placeHeight} gameVars={gameVars} gameSetters={gameSetters} />
+            <Place row={1} col={2} placeWidth={placeWidth} placeHeight={placeHeight} gameVars={gameVars} gameSetters={gameSetters} />
 
-            <Place row={2} col={0} gameVars={gameVars} gameSetters={gameSetters} />
-            <Place row={2} col={1} gameVars={gameVars} gameSetters={gameSetters} />
-            <Place row={2} col={2} gameVars={gameVars} gameSetters={gameSetters} />
+            <Place row={2} col={0} placeWidth={placeWidth} placeHeight={placeHeight} gameVars={gameVars} gameSetters={gameSetters} />
+            <Place row={2} col={1} placeWidth={placeWidth} placeHeight={placeHeight} gameVars={gameVars} gameSetters={gameSetters} />
+            <Place row={2} col={2} placeWidth={placeWidth} placeHeight={placeHeight} gameVars={gameVars} gameSetters={gameSetters} />
         </>
     )
 }
