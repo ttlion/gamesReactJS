@@ -28,6 +28,10 @@ export const initialGameStatus = (totalNbPlaces) => {
         started: false,
         ended: false,
         result: resultTypes.progress,
+        losingCoords: {
+            row: -1,
+            col: -1
+        },
         numberUnsuccessPlaces: getTotalNumberUnsuccesses(totalNbPlaces),
         numberCoveredPlaces: totalNbPlaces
     }
@@ -167,6 +171,12 @@ export const updateGameOnMouseClick = (row, col, gameVars, gameSetters) => {
 
         gameVars.gameStatus.result = resultTypes.lose;
         gameVars.gameStatus.ended = true;
+
+        gameVars.gameStatus.losingCoords = {
+            row: row,
+            col: col
+        }
+
     }
 
     if (gameVars.gameStatus.numberCoveredPlaces === gameVars.gameStatus.numberUnsuccessPlaces) {

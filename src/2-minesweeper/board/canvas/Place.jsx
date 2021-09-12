@@ -13,18 +13,7 @@ export const Place = ({ row, col, placeWidth, placeHeight, gameVars, gameSetters
 
     if (gameVars.gameStatus.ended) {
 
-        if (gameVars.places[row * gameVars.boardDims.nbCols + col].image !== placeImages.unsuccess) {
-            return <DisplayUpPlace
-                place={gameVars.places[row * gameVars.boardDims.nbCols + col]}
-                placeX={placeX}
-                placeY={placeY}
-                leftPadding={leftPadding}
-                topPadding={topPadding}
-                placeWidth={placeWidth}
-                placeHeight={placeHeight}
-            />
-        }
-        else {
+        if (gameVars.places[row * gameVars.boardDims.nbCols + col].image === placeImages.unsuccess) {
             if (gameVars.gameStatus.result === resultTypes.win) {
                 return <DisplayWinPlace
                     placeX={placeX}
@@ -35,7 +24,7 @@ export const Place = ({ row, col, placeWidth, placeHeight, gameVars, gameSetters
                     placeHeight={placeHeight}
                 />
             }
-            else {
+            else if (row === gameVars.gameStatus.losingCoords.row && col === gameVars.gameStatus.losingCoords.col) {
                 return <DisplayLosePlace
                     placeX={placeX}
                     placeY={placeY}
@@ -46,6 +35,16 @@ export const Place = ({ row, col, placeWidth, placeHeight, gameVars, gameSetters
                 />
             }
         }
+
+        return <DisplayUpPlace
+            place={gameVars.places[row * gameVars.boardDims.nbCols + col]}
+            placeX={placeX}
+            placeY={placeY}
+            leftPadding={leftPadding}
+            topPadding={topPadding}
+            placeWidth={placeWidth}
+            placeHeight={placeHeight}
+        />
 
     }
     else {
