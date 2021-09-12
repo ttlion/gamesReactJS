@@ -72,7 +72,7 @@ const fillOnesTwosThrees = (nbRows, nbCols, placesWithUnsuccess, initialPlaces) 
         for (let i = -1; i <= 1; i++) {
             for (let j = -1; j <= 1; j++) {
 
-                if ((i === 0 && j == 0)
+                if ((i === 0 && j === 0)
                     || row + i < 0 || row + i >= nbRows
                     || col + j < 0 || col + j >= nbCols) {
                     continue;
@@ -205,7 +205,7 @@ const turnEmptyPlacesUp = (row, col, nbRows, nbCols, places, gameStatus) => {
     for (let i = -1; i <= 1; i++) {
         for (let j = -1; j <= 1; j++) {
 
-            if ((i === 0 && j == 0)
+            if ((i === 0 && j === 0)
                 || row + i < 0 || row + i >= nbRows
                 || col + j < 0 || col + j >= nbCols) {
                 continue;
