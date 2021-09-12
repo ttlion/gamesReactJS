@@ -62,14 +62,14 @@ export const PlayerForm = ({ gameVars, gameSetters }) => {
         <Row className="justify-content-center" >
             < Col md={2} xs={6} className="text-center" >
                 <Form.Label>Number of rows</Form.Label>
-                <Form.Control className="text-center" placeholder={gameVars.boardDims.nbRows}
+                <Form.Control className="text-center" value={gameVars.boardDims.nbRows}
                     readOnly={gameVars.gameStatus.started}
                     onChange={e => setNbRows(parseInt(e.target.value))}
                 />
             </Col >
             <Col md={2} xs={6} className="text-center">
                 <Form.Label>Number of columns</Form.Label>
-                <Form.Control className="text-center" placeholder={gameVars.boardDims.nbCols}
+                <Form.Control className="text-center" value={gameVars.boardDims.nbCols}
                     readOnly={gameVars.gameStatus.started}
                     onChange={e => setNbCols(parseInt(e.target.value))}
                 />
