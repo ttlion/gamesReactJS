@@ -17,7 +17,9 @@ export const InitialInfo = () => {
         <p className="mb-0">
             {"This is a simple minesweeper game done in ReactJS using React PIXI."}
             <br />
-            {"TODO: More info here"}
+            {"To play, just select the number of rows and columns and press \"Start Game\"."}
+            <br />
+            {"You can click \"Reset\" in the middle of a game or during a game, which puts everything in its initial state."}
         </p>
     </Alert>
 };

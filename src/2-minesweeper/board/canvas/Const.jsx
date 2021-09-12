@@ -7,9 +7,9 @@ import numberThree from './../../images/number3.png';
 import numberFour from './../../images/number4.png';
 import numberFive from './../../images/number5.png';
 import numberSix from './../../images/number6.png';
-import numberSeven from './../../images/number7.jpg';
+import numberSeven from './../../images/number7.png';
 import numberEight from './../../images/number8.png';
-import flag from './../../images/flag.jpg';
+import confetti from './../../images/confetti.png';
 import bomb from './../../images/bomb.png';
 
 export const canvasSpecs = {
@@ -38,7 +38,7 @@ export const placeImages = {
     distanceSix: numberSix,
     distanceSeven: numberSeven,
     distanceEight: numberEight,
-    success: flag,
+    success: confetti,
     unsuccess: bomb
 }
 
