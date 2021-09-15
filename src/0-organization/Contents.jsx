@@ -11,6 +11,7 @@ export const Contents = ({ setPageSelected }) => {
             <ListGroup>
                 <ListGroup.Item action onClick={() => setPageSelected(pageIds.ticTacToe)}>Tic-tac-toe</ListGroup.Item>
                 <ListGroup.Item action onClick={() => setPageSelected(pageIds.minesweeeper)}>Minesweeper</ListGroup.Item>
+                <ListGroup.Item action onClick={() => setPageSelected(pageIds.chickenCatchEgg)}>Chicken catch egg</ListGroup.Item>
             </ListGroup>
 
         </>
