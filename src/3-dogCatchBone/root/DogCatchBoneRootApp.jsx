@@ -5,8 +5,7 @@ import logoImg from './../assets/logo.png';
 class MyGame extends Phaser.Scene {
 
     constructor() {
-        debugger;
-        super();
+        super('DogCatchBoneRootApp');
     }
 
     preload() {
@@ -28,7 +27,7 @@ class MyGame extends Phaser.Scene {
 
 const config = {
     type: Phaser.AUTO,
-    parent: 'ChickenCatchEggRootApp',
+    parent: 'DogCatchBoneRootApp',
     width: 800,
     height: 600,
     scene: MyGame
@@ -36,7 +35,7 @@ const config = {
 
 
 
-export class ChickenCatchEggRootApp extends React.PureComponent {
+export class DogCatchBoneRootApp extends React.PureComponent {
 
     componentDidMount = () => new Phaser.Game(config);
     render = () => <></>;

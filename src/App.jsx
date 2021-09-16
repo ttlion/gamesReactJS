@@ -4,7 +4,7 @@ import { Footer } from './0-organization/GameFrame.jsx';
 import { pageIds } from './0-organization/Consts.jsx';
 import { TicTacToeBoard } from './1-tic-tac-toe/board/Board.jsx';
 import { MineSweeperBoard } from "./2-minesweeper/board/Board.jsx";
-import { ChickenCatchEggRootApp } from './3-chickenCatchEgg/root/ChickenCatchEggRootApp.jsx';
+import { DogCatchBoneRootApp } from './3-dogCatchBone/root/DogCatchBoneRootApp.jsx';
 
 export const App = () => {
 
@@ -33,10 +33,10 @@ export const App = () => {
       }
 
 
-      {pageSelected === pageIds.chickenCatchEgg &&
+      {pageSelected === pageIds.dogCatchBone &&
         <>
-          <div id="ChickenCatchEggRootApp" className={'d-flex justify-content-center'} />
-          <ChickenCatchEggRootApp />
+          <div id="DogCatchBoneRootApp" className={'d-flex justify-content-center'} />
+          <DogCatchBoneRootApp />
           <Footer setPageSelected={setPageSelected} />
         </>
       }
