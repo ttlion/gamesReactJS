@@ -12,6 +12,37 @@ export const AssetsConsts = {
                 layer1: 'Background-Layer1'
             }
         }
+    },
+    dog: {
+        name: 'dog',
+        asset: {
+            png: 'phaserAssets/3-dogCatchBone/dog/dog.png',
+            json: 'phaserAssets/3-dogCatchBone/dog/dog.json'
+        },
+        scale: 0.25,
+        action: {
+            idle: {
+                name: 'dog-idle',
+                prefix: 'Idle (',
+                suffix: ').png',
+                min: 1,
+                max: 10
+            },
+            walk: {
+                name: 'dog-walk',
+                prefix: 'Walk (',
+                suffix: ').png',
+                min: 1,
+                max: 10
+            },
+            run: {
+                name: 'dog-run',
+                prefix: 'Run (',
+                suffix: ').png',
+                min: 1,
+                max: 10
+            }
+        }
     }
 }
 
