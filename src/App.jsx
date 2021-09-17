@@ -6,44 +6,58 @@ import { TicTacToeBoard } from './1-tic-tac-toe/board/Board.jsx';
 import { MineSweeperBoard } from "./2-minesweeper/board/Board.jsx";
 import { DogCatchBoneRootApp } from './3-dogCatchBone/root/DogCatchBoneRootApp.jsx';
 
+import { gameNames } from './3-dogCatchBone/root/GameConfigs.jsx';
+
 export const App = () => {
 
   const [pageSelected, setPageSelected] = useState(pageIds.contentsPage);
 
+  // Uncomment this before merging feature to develop!
+  // return (
+
+  //   <div className="App">
+
+  //     {pageSelected === pageIds.contentsPage &&
+  //       <Contents setPageSelected={setPageSelected} />
+  //     }
+
+  //     {pageSelected === pageIds.ticTacToe &&
+  //       <>
+  //         <TicTacToeBoard />
+  //         <Footer setPageSelected={setPageSelected} />
+  //       </>
+  //     }
+
+  //     {pageSelected === pageIds.minesweeeper &&
+  //       <>
+  //         <MineSweeperBoard />
+  //         <Footer setPageSelected={setPageSelected} />
+  //       </>
+  //     }
+
+
+  //     {pageSelected === pageIds.dogCatchBone &&
+  //       <>
+  //         <div id="DogCatchBoneRootApp" className={'d-flex justify-content-center'} />
+  //         <DogCatchBoneRootApp />
+  //         <Footer setPageSelected={setPageSelected} />
+  //       </>
+  //     }
+
+  //   </div>
+
+  // );
+
+
+  // To just have the current game in the webpage
   return (
-
     <div className="App">
-
-      {pageSelected === pageIds.contentsPage &&
-        <Contents setPageSelected={setPageSelected} />
-      }
-
-      {pageSelected === pageIds.ticTacToe &&
-        <>
-          <TicTacToeBoard />
-          <Footer setPageSelected={setPageSelected} />
-        </>
-      }
-
-      {pageSelected === pageIds.minesweeeper &&
-        <>
-          <MineSweeperBoard />
-          <Footer setPageSelected={setPageSelected} />
-        </>
-      }
-
-
-      {pageSelected === pageIds.dogCatchBone &&
-        <>
-          <div id="DogCatchBoneRootApp" className={'d-flex justify-content-center'} />
-          <DogCatchBoneRootApp />
-          <Footer setPageSelected={setPageSelected} />
-        </>
-      }
-
+      <>
+        <div id={gameNames.rootAppName} className={'d-flex justify-content-center'} />
+        <DogCatchBoneRootApp />
+      </>
     </div>
-
-  );
+  )
 
 };
 
