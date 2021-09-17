@@ -1,6 +1,6 @@
 import { gameConfig } from "../../root/GameConfigs";
 import { AssetsConsts } from "../consts/AssetsConsts";
-import { caracters } from "../state/GameStateVars";
+import { caracters, score } from "../state/GameStateVars";
 
 /**
  * @param {Phaser.Scene} [gameScene]
@@ -10,6 +10,7 @@ export const GameCreator = (gameScene) => {
     createDogCaracter(gameScene);
     createBone(gameScene);
     createBoneAndDogCollider(gameScene);
+    createScoreIndicator(gameScene);
 }
 
 
@@ -106,7 +107,7 @@ const createBone = (gameScene) => {
 const createBoneAndDogCollider = (gameScene) => {
     caracters.dogCatchBoneAudio.audio = gameScene.sound.add(AssetsConsts.dogCatchBoneAudio.name)
     gameScene.physics.add.collider(caracters.dog.sprite, caracters.bone.sprite, handleDogAndBoneCollision, undefined, gameScene);
-}
+};
 
 /**
  * @param {Phaser.Types.Physics.Arcade.SpriteWithDynamicBody} [dog]
@@ -118,4 +119,16 @@ const handleDogAndBoneCollision = (dog, bone) => {
     bone.setVelocity(0, 0);
     caracters.dogCatchBoneAudio.audio.play();
 
-}
+    score.value++;
+    score.screenText.setText('Score: ' + score.value);
+
+};
+
+
+/**
+ * @param {Phaser.Scene} [gameScene]
+ */
+const createScoreIndicator = (gameScene) => {
+    score.value = 0;
+    score.screenText = gameScene.add.text(16, 16, 'Score: ' + score.value, { fontSize: '32px', fill: '#000' });
+};

@@ -41,3 +41,14 @@ export const caracters = {
 export const speed = {
     normalSpeed: 100
 };
+
+/**
+ * @type {{
+ *  value: number,
+ *  screenText:Phaser.GameObjects.Text
+ * }}
+ */
+export const score = {
+    value: 0,
+    screenText: null
+}
