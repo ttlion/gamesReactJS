@@ -4,6 +4,13 @@ import { AssetsConsts } from "../consts/AssetsConsts";
 
 export const GameUpdator = () => {
 
+    dogMovement();
+
+};
+
+
+const dogMovement = () => {
+
     if (!keyboard.cursor) {
         return;
     }
@@ -40,5 +47,6 @@ export const GameUpdator = () => {
     caracters.dog.sprite.setVelocity(speedX, speedY);
     caracters.dog.sprite.setScale(scaleX, scaleY);
 
-
 };
+
+

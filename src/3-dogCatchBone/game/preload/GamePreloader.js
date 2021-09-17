@@ -12,4 +12,9 @@ export const GamePreloader = (gameScene) => {
 
     keyboard.cursor = gameScene.input.keyboard.createCursorKeys();
 
+    gameScene.load.image(AssetsConsts.bone.name, AssetsConsts.bone.asset);
+
+    gameScene.load.audio(AssetsConsts.dogCatchBoneAudio.name, AssetsConsts.dogCatchBoneAudio.asset);
+
+
 };

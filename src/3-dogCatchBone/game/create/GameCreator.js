@@ -1,3 +1,4 @@
+import { gameConfig } from "../../root/GameConfigs";
 import { AssetsConsts } from "../consts/AssetsConsts";
 import { caracters } from "../state/GameStateVars";
 
@@ -5,20 +6,40 @@ import { caracters } from "../state/GameStateVars";
  * @param {Phaser.Scene} [gameScene]
  */
 export const GameCreator = (gameScene) => {
+    createBackground(gameScene);
+    createDogCaracter(gameScene);
+    createBone(gameScene);
+    createBoneAndDogCollider(gameScene);
+}
 
+
+/**
+ * @param {Phaser.Scene} [gameScene]
+ */
+const createBackground = (gameScene) => {
     let map = gameScene.make.tilemap({ key: AssetsConsts.background.tilemap.name });
     let tileset = map.addTilesetImage(AssetsConsts.background.tileset.name, AssetsConsts.background.tileset.name);
     map.createLayer(AssetsConsts.background.tilemap.layers.layer1, tileset);
+};
+
+
+
+/**
+ * @param {Phaser.Scene} [gameScene]
+ */
+const createDogCaracter = (gameScene) => {
 
     caracters.dog.sprite = gameScene.physics.add.sprite(200, 200, AssetsConsts.dog.name, AssetsConsts.dog.action.idle.prefix + AssetsConsts.dog.action.idle.min + AssetsConsts.dog.action.idle.suffix);
 
     caracters.dog.sprite.setScale(AssetsConsts.dog.scale);
-    caracters.dog.sprite.setSize(caracters.dog.sprite.width * 0.85, caracters.dog.sprite.height)
+    caracters.dog.sprite.setBodySize(caracters.dog.sprite.width * 0.85, caracters.dog.sprite.height, true)
     caracters.dog.sprite.setCollideWorldBounds(true);
 
     createDogCaracterAnimations(gameScene);
 
-}
+};
+
+
 
 /**
  * @param {Phaser.Scene} [gameScene]
@@ -65,5 +86,36 @@ const createDogCaracterAnimations = (gameScene) => {
         frameRate: 12
     });
 
+
+}
+
+/**
+ * @param {Phaser.Scene} [gameScene]
+ */
+const createBone = (gameScene) => {
+    caracters.bone.sprite = gameScene.physics.add.sprite(400, 100, AssetsConsts.bone.name);
+    caracters.bone.sprite.setScale(AssetsConsts.bone.scale);
+    caracters.bone.sprite.setCollideWorldBounds(true);
+};
+
+
+
+/**
+ * @param {Phaser.Scene} [gameScene]
+ */
+const createBoneAndDogCollider = (gameScene) => {
+    caracters.dogCatchBoneAudio.audio = gameScene.sound.add(AssetsConsts.dogCatchBoneAudio.name)
+    gameScene.physics.add.collider(caracters.dog.sprite, caracters.bone.sprite, handleDogAndBoneCollision, undefined, gameScene);
+}
+
+/**
+ * @param {Phaser.Types.Physics.Arcade.SpriteWithDynamicBody} [dog]
+ * @param {Phaser.Types.Physics.Arcade.SpriteWithDynamicBody} [bone]
+ */
+const handleDogAndBoneCollision = (dog, bone) => {
+
+    bone.setPosition(Math.random() * gameConfig.width, Math.random() * gameConfig.height);
+    bone.setVelocity(0, 0);
+    caracters.dogCatchBoneAudio.audio.play();
 
 }

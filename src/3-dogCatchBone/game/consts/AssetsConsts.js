@@ -43,6 +43,17 @@ export const AssetsConsts = {
                 max: 10
             }
         }
+    },
+    bone: {
+        name: 'bone',
+        asset: 'phaserAssets/3-dogCatchBone/bone/bone.png',
+        scale: 0.35,
+    },
+
+    dogCatchBoneAudio: {
+        name: 'dogCatchBoneAudio',
+        asset: 'phaserAssets/3-dogCatchBone/sounds/dogEatsBoneSound.wav'
     }
+
 }
 
