@@ -2,6 +2,9 @@ import { gameConfig } from "../../root/GameConfigs";
 import { AssetsConsts } from "../consts/AssetsConsts";
 import { caracters, score } from "../state/GameStateVars";
 
+import { gameNames } from "../../root/GameConfigs";
+
+
 /**
  * @param {Phaser.Scene} [gameScene]
  */
@@ -11,6 +14,7 @@ export const GameCreator = (gameScene) => {
     createBone(gameScene);
     createBoneAndDogCollider(gameScene);
     createScoreIndicator(gameScene);
+    gameScene.scene.launch(gameNames.menuSceneName);
 }
 
 
